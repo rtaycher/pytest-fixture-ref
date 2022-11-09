@@ -39,7 +39,8 @@
 ## Installation
 
 ```sh
-pip install pytest-fixture-ref
+pip install git+https://github.com/rtaycher/pytest-fixture-ref.git
+
 ```
 
 ## Development
