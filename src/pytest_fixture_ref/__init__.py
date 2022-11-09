@@ -22,26 +22,33 @@ def make_test_with_fixtures(**fixture_kwargs):
         assert tmp.exists()
 
     """
+
     def inner(fn):
         signature = inspect.signature(fn)
         keyword_names_to_fixtures = {
             k: fixture_kwargs.get(k, None) or v.default
             for k, v in signature.parameters.items()
         }
-        assert all(v is not inspect.Parameter.empty
-                   for v in keyword_names_to_fixtures.values()), (
-            'every parameter should have a matching fixture function '
-            'provided in either the decorator or default function')
-        keyword_names_to_fixture_names = {k: f.__name__ for (k, f) in keyword_names_to_fixtures.items()}
+        assert all(
+            v is not inspect.Parameter.empty for v in keyword_names_to_fixtures.values()
+        ), (
+            "every parameter should have a matching fixture function "
+            "provided in either the decorator or default function"
+        )
+        keyword_names_to_fixture_names = {
+            k: f.__name__ for (k, f) in keyword_names_to_fixtures.items()
+        }
         fixture_names = keyword_names_to_fixture_names.values()
 
-        z = textwrap.dedent(f'''\
+        z = textwrap.dedent(
+            f"""\
         def test_func({', '.join(fixture_names)}):
             return fn({', '.join(kname + '=' + fname for (kname, fname) in keyword_names_to_fixture_names.items())})
-        ''')
+        """
+        )
         scope = dict(fn=fn)
         exec(z, scope)
-        test_func = scope['test_func']
+        test_func = scope["test_func"]
         test_func.__name__ = fn.__name__
         return test_func
 
