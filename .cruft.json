@@ -1,0 +1,18 @@
+{
+  "template": "https://github.com/woltapp/wolt-python-package-cookiecutter",
+  "commit": "6669a067eeaaed3bee84312428a3e94cd13295f2",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "author_name": "Roman A. Taycher",
+      "author_email": "rtaycher.devmail@gmail.com",
+      "github_username": "rtaycher",
+      "project_name": "pytest fixture ref",
+      "project_slug": "pytest-fixture-ref",
+      "package_name": "pytest_fixture_ref",
+      "project_short_description": "Lets users reference fixtures without name matching magic.",
+      "_template": "https://github.com/woltapp/wolt-python-package-cookiecutter"
+    }
+  },
+  "directory": null
+}
