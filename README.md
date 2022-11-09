@@ -18,9 +18,11 @@
 
 ## Lets users reference fixtures without name matching magic.
 
-    Pass fixtures via default value or decorator args
+Pass fixtures via default value or decorator args
 
-    example:
+example:
+
+    from pytest_fixture_ref import make_test_with_fixtures
 
     @make_test_with_fixtures()
     def test_bar1(f1=fix_w_yield1, f2=fix_w_yield2, tmp=tmp_path):
