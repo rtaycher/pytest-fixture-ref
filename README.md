@@ -16,27 +16,45 @@
 
 ---
 
-## Lets users reference fixtures without name matching magic.
+## Let developers reference pytest fixtures without name matching magic.
 
-Pass fixtures via default value or decorator args
+Pass fixtures via default value or decorator args instead of magic strings.
+
+Let me admit this is a bit of a hack.
+It might be important to note that this still uses pytests usual magic string matching under the covers
+by grabbing the function name and re-writing the function.
+That means you do have to make sure pytest imports it by installing it/specifying it in pytest_plugins/etc
+as well as importing it for reference.
+It also means this technically works with fake/dummy functions with the same name
+(in case you can't easily import some fixtures)
+
+
 
 example:
 
-    from pytest_fixture_ref import make_test_with_fixtures
+    from pytest_fixture_ref import using_fixtures_from_defaults, using_fixtures_from_kwargs
 
-    @make_test_with_fixtures()
-    def test_bar1(f1=fix_w_yield1, f2=fix_w_yield2, tmp=tmp_path):
-        print("test_bar")
-        print(f'{tmp}')
+    @using_fixtures_from_defaults
+    def test_bar1(_=fix_w_yield1, __=fix_w_yield2, tmp=tmp_path):
         assert tmp.exists()
 
 
-    @make_test_with_fixtures(f1=fix_w_yield1, f2=fix_w_yield2, tmp=tmp_path)
-    def test_bar2(f1, f2, tmp):
-        print("test_bar")
-        print(f'{tmp}')
+    @using_fixtures_from_kwargs(_=fix_w_yield1, __=fix_w_yield2, tmp=tmp_path)
+    def test_bar2(_, __, tmp):
         assert tmp.exists()
 
+
+You can also use it to reference fixtures from other fixtures
+
+    @pytest.fixture
+    def first_entry():
+        return "a"
+
+
+    @pytest.fixture
+    @using_fixtures_from_defaults
+    def order(fe=first_entry):
+        return [fe]
 
 ## Installation
 

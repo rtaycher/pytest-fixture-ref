@@ -1,7 +1,7 @@
 import pytest
 from _pytest.tmpdir import tmp_path
 
-from pytest_fixture_ref import make_test_with_fixtures
+from pytest_fixture_ref import using_fixtures_from_defaults, using_fixtures_from_kwargs
 
 
 @pytest.fixture
@@ -18,15 +18,31 @@ def fix_w_yield2():
     print("after_yield_2")
 
 
-@make_test_with_fixtures()
-def test_bar1(f1=fix_w_yield1, f2=fix_w_yield2, tmp=tmp_path):
-    print("test_bar")
-    print(f"{tmp}")
+@pytest.fixture
+def first_entry():
+    return "a"
+
+
+@pytest.fixture
+@using_fixtures_from_defaults
+def order(fe=first_entry):
+    return [fe]
+
+
+@using_fixtures_from_defaults
+def test_bar1(_=fix_w_yield1, __=fix_w_yield2, tmp=tmp_path):
     assert tmp.exists()
 
 
-@make_test_with_fixtures(f1=fix_w_yield1, f2=fix_w_yield2, tmp=tmp_path)
-def test_bar2(f1, f2, tmp):
-    print("test_bar")
-    print(f"{tmp}")
+@using_fixtures_from_kwargs(_=fix_w_yield1, __=fix_w_yield2, tmp=tmp_path)
+def test_bar2(_, __, tmp):
     assert tmp.exists()
+
+
+@using_fixtures_from_kwargs(fe=order)
+def test_first_order(fe):
+    assert fe == ["a"]
+
+
+if __name__ == "__main__":
+    pytest.main([__file__])
