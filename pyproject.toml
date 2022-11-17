@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pytest-fixture-ref"
-version = "0.0.2"
+version = "0.0.4"
 description = "Lets users reference fixtures without name matching magic."
 authors = [
     "Roman A. Taycher <rtaycher.devmail@gmail.com>",
