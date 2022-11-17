@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pytest-fixture-ref"
-version = "0.0.3"
+version = "0.0.2"
 description = "Lets users reference fixtures without name matching magic."
 authors = [
     "Roman A. Taycher <rtaycher.devmail@gmail.com>",
@@ -43,7 +43,8 @@ flake8-debugger = "*"
 flake8-eradicate = "*"
 flake8-logging-format = "*"
 isort = "*"
-mkdocstrings = "*"
+mkdocstrings-python-legacy = "*"
+mkdocstrings = "^0.19"
 mkdocs-material = "*"
 pep8-naming = "*"
 pre-commit = "*"
@@ -55,7 +56,7 @@ python-kacl = "*"
 pyupgrade = "*"
 tryceratops = "*"
 # try to avoid odd markdown import issue
-markdown = ">=3.4.1"
+markdown = "^3.4.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
