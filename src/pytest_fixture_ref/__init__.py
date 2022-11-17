@@ -52,14 +52,11 @@ def using_fixtures_from_kwargs(**fixture_kwargs):
     def inner(fn):
         signature = inspect.signature(fn)
         keyword_names_to_fixtures = {
-            k: fixture_kwargs.get(k, None) or v.default
+            k: fixture_kwargs.get(k, None)
             for k, v in signature.parameters.items()
         }
-        assert all(
-            v is not inspect.Parameter.empty for v in keyword_names_to_fixtures.values()
-        ), (
-            "every parameter should have a matching fixture function "
-            "provided in either the decorator or default function"
+        assert set( signature.parameters.keys()).issubset(set(fixture_kwargs.keys())), (
+            "every parameter should have a matching keyword argument in the decorator function"
         )
         keyword_names_to_fixture_names = {
             k: f.__name__ for (k, f) in keyword_names_to_fixtures.items()

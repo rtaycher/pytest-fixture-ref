@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+- update using_fixtures_from_kwargs to not accept defaults like the pre-split function did
+
 ## [0.0.2] - 2022-11-17
 ### Changed
 - split and rename into using_fixtures_from_defaults and using_fixtures_from_kwargs
