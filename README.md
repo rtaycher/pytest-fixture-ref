@@ -59,8 +59,7 @@ You can also use it to reference fixtures from other fixtures
 ## Installation
 
 ```sh
-pip install git+https://github.com/rtaycher/pytest-fixture-ref.git
-
+pip install pytest-fixture-ref
 ```
 
 ## Development
