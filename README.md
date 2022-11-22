@@ -18,9 +18,17 @@
 
 ## Let developers reference pytest fixtures without name matching magic.
 
-Pass fixtures via default value or decorator args instead of magic strings.
+### Pass fixtures via default value or decorator args instead of magic strings.
 
-Let me admit this is a bit of a hack.
+pytest fetches fixtures by argument name instead of by object references,
+this breaks python convention and can feel odd/like too much magic. ex:
+
+    def test_bar1(fix_w_yield1, fix_w_yield2, tmp_path):
+        assert tmp_path.exists()
+
+in regular python code you wouldn't expect this to initialize the variables from fixture functions fix_w_yield1/fix_w_yield2/tmp_path
+
+Let me admit this workaround for pytest fixture reference a bit of a hack.
 It might be important to note that this still uses pytests usual magic string matching under the covers
 by grabbing the function name and re-writing the function.
 That means you do have to make sure pytest imports it by installing it/specifying it in pytest_plugins/etc
